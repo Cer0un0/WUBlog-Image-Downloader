@@ -16,7 +16,8 @@ import javax.imageio.ImageIO;
 
 public class AmebaJpeg {
 	static URL firstArticle;
-	static String ameblo = "http://ameblo.jp/wakeupgirls/";
+	static String ameblo = "http://ameblo.jp/wakeupgirls/"; //ブログのトップページ
+	static String saveDirectory = "C:\\workspace\\Java\\WUBlog Image Downloader"; //保存したいディレクトリ
 	
 	public static StringBuilder getSourceText(URL url) throws IOException { //引数のURLのソースコードの取得
 		InputStream in = url.openStream();
@@ -43,13 +44,13 @@ public class AmebaJpeg {
 	}
 	
 	public static void folderExist(String s){ //フォルダがあるのかの確認。なければ作成
-		File file = new File("C:\\workspace\\Java\\Ameba" + s);
+		File file = new File(saveDirectory + s);
 		if(!file.exists())	//フォルダ無し
 			file.mkdirs();
 	}
 	
 	public static int fileExist(String s){ //ファイルがあるのかの確認
-		File file = new File("C:\\workspace\\Java\\Ameba" + s);
+		File file = new File(saveDirectory + s);
 		if(!file.exists())	//ファイル無し
 			return -1;
 		return 0;
@@ -108,7 +109,7 @@ public class AmebaJpeg {
 		StringBuilder source = getSourceText(firstArticle);
 		saveJpeg(source);
 		StringBuilder next = null;
-		while(1>0){
+		while(true){
 			next = getSourceText(next_Article(source));
 			saveJpeg(next);
 			source = next;
